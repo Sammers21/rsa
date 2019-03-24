@@ -3,7 +3,6 @@
  */
 package rsa
 
-import java.math.BigInteger
 import java.util.Random
 
 class RSA(e: BigNumber, d: BigNumber, n: BigNumber) {

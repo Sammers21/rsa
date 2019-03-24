@@ -1,6 +1,5 @@
 package rsa
 
-import java.math.BigInteger
 import java.util.Random
 
 class BigNumber(value: Array[Byte]) extends Comparable[BigNumber] {
@@ -13,7 +12,7 @@ class BigNumber(value: Array[Byte]) extends Comparable[BigNumber] {
 
   def gcd(e: BigNumber): BigNumber = ???
 
-  def -(anotherInt: BigInteger): BigNumber = ???
+  def -(anotherInt: BigNumber): BigNumber = ???
 
   def -(anotherInt: Int): BigNumber = ???
 
@@ -31,5 +30,4 @@ class BigNumber(value: Array[Byte]) extends Comparable[BigNumber] {
 object BigNumber {
 
   def probablePrime(length: Int, r: Random): BigNumber = ???
-
 }
