@@ -4,14 +4,38 @@
 package rsa
 
 import java.math.BigInteger
+import java.util.Random
 
 class RSA(e: BigInteger, d: BigInteger, n: BigInteger) {
 
   def encrypt(message: Array[Byte]): Array[Byte] = {
-   return new BigInteger(message).modPow(e, n).toByteArray
+    return new BigInteger(message).modPow(e, n).toByteArray
   }
 
   def decrypt(message: Array[Byte]): Array[Byte] = {
     return new BigInteger(message).modPow(d, n).toByteArray
+  }
+}
+
+object RSA {
+
+
+  /**
+    * Сгенерировать открытый и закрытый RSA ключ
+    * @param length длинна простых чисел p и q
+    * @return кортеэ из чисел e, d, n
+    */
+  def generateKeys(length: Int): (BigInteger, BigInteger, BigInteger) = {
+    val r = new Random()
+    val p = BigInteger.probablePrime(length, r)
+    val q = BigInteger.probablePrime(length, r)
+    val n = p.multiply(q)
+    val phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE))
+    val e = BigInteger.probablePrime(length / 2, r)
+    while (phi.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(phi) < 0) {
+      e.add(BigInteger.ONE)
+    }
+    val d = e.modInverse(phi)
+    (e, d, n)
   }
 }
