@@ -6,7 +6,7 @@ package rsa
 import java.math.BigInteger
 import java.util.Random
 
-class RSA(e: BigInteger, d: BigInteger, n: BigInteger) {
+class RSA(e: BigNumber, d: BigNumber, n: BigNumber) {
 
   /**
     * Зашифровать.
@@ -15,7 +15,7 @@ class RSA(e: BigInteger, d: BigInteger, n: BigInteger) {
     * @return шифр
     */
   def encrypt(message: Array[Byte]): Array[Byte] = {
-    return new BigInteger(message).modPow(e, n).toByteArray
+    return new BigNumber(message).modPow(e, n).toByteArray
   }
 
   /**
@@ -25,12 +25,11 @@ class RSA(e: BigInteger, d: BigInteger, n: BigInteger) {
     * @return рисшифрованное сообщение
     */
   def decrypt(message: Array[Byte]): Array[Byte] = {
-    return new BigInteger(message).modPow(d, n).toByteArray
+    return new BigNumber(message).modPow(d, n).toByteArray
   }
 }
 
 object RSA {
-
 
   /**
     * Сгенерировать открытый и закрытый RSA ключ
@@ -38,15 +37,15 @@ object RSA {
     * @param length длинна простых чисел p и q
     * @return кортеэ из чисел e, d, n
     */
-  def generateKeys(length: Int): (BigInteger, BigInteger, BigInteger) = {
+  def generateKeys(length: Int): (BigNumber, BigNumber, BigNumber) = {
     val r = new Random()
-    val p = BigInteger.probablePrime(length, r)
-    val q = BigInteger.probablePrime(length, r)
-    val n = p.multiply(q)
-    val phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE))
-    val e = BigInteger.probablePrime(length / 2, r)
-    while (phi.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(phi) < 0) {
-      e.add(BigInteger.ONE)
+    val p = BigNumber.probablePrime(length, r)
+    val q = BigNumber.probablePrime(length, r)
+    val n = p * q
+    val phi = (p - 1) * (q - 1)
+    var e = BigNumber.probablePrime(length / 2, r)
+    while (phi.gcd(e).compareTo(1) > 0 && e.compareTo(phi) < 0) {
+      e = e + 1
     }
     val d = e.modInverse(phi)
     (e, d, n)
