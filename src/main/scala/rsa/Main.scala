@@ -15,7 +15,7 @@ object Main extends App {
   // decrypt
   val decrypted = rsa.decrypt(encrypted)
   println("Строка в байтах на выходе расшифрованная: " + toByteString(decrypted))
-  println("Decrypted String: " + new String(decrypted))
+  println("Дешиврованная строка: " + new String(decrypted))
 
   def toByteString(arr: Array[Byte]): String = {
     arr.map(b => Integer.toString(b.toInt, 10)).reduce((str1: String, str2: String) => str1 + str2)
