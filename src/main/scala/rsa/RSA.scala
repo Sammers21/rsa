@@ -8,10 +8,22 @@ import java.util.Random
 
 class RSA(e: BigInteger, d: BigInteger, n: BigInteger) {
 
+  /**
+    * Зашифровать.
+    *
+    * @param message сообщение
+    * @return шифр
+    */
   def encrypt(message: Array[Byte]): Array[Byte] = {
     return new BigInteger(message).modPow(e, n).toByteArray
   }
 
+  /**
+    * Расшифровать.
+    *
+    * @param message сообщение
+    * @return рисшифрованное сообщение
+    */
   def decrypt(message: Array[Byte]): Array[Byte] = {
     return new BigInteger(message).modPow(d, n).toByteArray
   }
@@ -22,6 +34,7 @@ object RSA {
 
   /**
     * Сгенерировать открытый и закрытый RSA ключ
+    *
     * @param length длинна простых чисел p и q
     * @return кортеэ из чисел e, d, n
     */
