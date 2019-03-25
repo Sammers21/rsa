@@ -47,9 +47,6 @@ object RSA {
     val n = p.multiply(q)
     val phi = p.subtract(ONE).multiply(q.subtract(ONE))
     val e = millerProbablePrime(length / 2)
-    while (phi.gcd(e).compareTo(ONE) > 0 && e.compareTo(phi) < 0) {
-      e.add(ONE)
-    }
     val d = e.modInverse(phi)
     (e, d, n)
   }
@@ -81,7 +78,7 @@ object RSA {
       val a = randomBigInt(number.subtract(ONE).bitLength())
       var x = a.modPow(t, number)
       if (x.compareTo(ONE) == 0 || x.compareTo(number.subtract(ONE)) == 0) {
-        // go next
+        // continue
       } else {
         breakable {
           for (k <- 0 until s.subtract(ONE).intValue()) {
@@ -96,7 +93,7 @@ object RSA {
           }
         }
         if (flagtoCycleA) {
-          // go next
+          // go continue
         } else {
           return false
         }
