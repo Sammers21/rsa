@@ -33,6 +33,7 @@ class RSA(e: BigInteger, d: BigInteger, n: BigInteger) {
 
 object RSA {
 
+  private val r = new Random()
 
   /**
     * Сгенерировать открытый и закрытый RSA ключ
@@ -41,7 +42,6 @@ object RSA {
     * @return кортеэ из чисел e, d, n
     */
   def generateKeys(length: Int): (BigInteger, BigInteger, BigInteger) = {
-    val r = new Random()
     val p = millerProbablePrime(length)
     val q = millerProbablePrime(length)
     val n = p.multiply(q)
@@ -80,11 +80,12 @@ object RSA {
       if (x.compareTo(ONE) == 0 || x.compareTo(number.subtract(ONE)) == 0) {
         // continue
       } else {
+        // цикл Б
         breakable {
           for (k <- 0 until s.subtract(ONE).intValue()) {
             x = x.modPow(TWO, number)
             if (x.compareTo(ONE) == 0) {
-              return true
+              return false
             }
             if (x.compareTo(number.subtract(ONE)) == 0) {
               flagtoCycleA = true
@@ -103,7 +104,7 @@ object RSA {
   }
 
   private def randomBigInt(bitLen: Int): BigInteger = {
-    new BigInteger(bitLen, new Random())
+    new BigInteger(bitLen, r)
   }
 
   private def step2PowSumnT(number: BigInteger): (BigInteger, BigInteger) = {
