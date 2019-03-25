@@ -5,7 +5,7 @@ import scala.io.StdIn
 
 object Main extends App {
   val keyLen = 1024
-  println(String.format("Генерируем p и q с длинной: %d", Int.box(keyLen)))
+  println(String.format("Генерируем p и q с длинной: %d ......", Int.box(keyLen)))
   val (e, d, n) = RSA.generateKeys(keyLen)
   val rsa = new RSA(e, d, n)
   println("Введите текст для шифрования:")

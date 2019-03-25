@@ -6,7 +6,8 @@ package rsa
 import java.math.BigInteger
 import java.math.BigInteger._
 import java.util.Random
-import util.control.Breaks._
+
+import scala.util.control.Breaks._
 
 class RSA(e: BigInteger, d: BigInteger, n: BigInteger) {
 
@@ -33,7 +34,7 @@ class RSA(e: BigInteger, d: BigInteger, n: BigInteger) {
 
 object RSA {
 
-  private val r = new Random()
+  private val r = new Random(System.nanoTime())
 
   /**
     * Сгенерировать открытый и закрытый RSA ключ
